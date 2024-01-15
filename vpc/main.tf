@@ -41,5 +41,17 @@ module "vpc" {
 	enable_flow_log = true
 	enable_flow_log_cloudwatch_iam_role = true
 	enable_flowlog_cloudwatch_log_group = true
+
+	public_subnet_tags = {
+		"kubernetes.io/cluster/${var.cluster_name}" = "shared"
+		"kubenetes.io/role/elb" = 1
+	}
+
+	private_subnet_tags = {
+                "kubernetes.io/cluster/${var.cluster_name}" = "shared"
+                "kubenetes.io/role/internal-elb" = 1
+        }
+
+	tags = local.tags
 }
 
